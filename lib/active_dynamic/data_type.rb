@@ -1,4 +1,4 @@
-module DynamicAttributes
+module ActiveDynamic
   module DataType
     String = 0
     Text = 1

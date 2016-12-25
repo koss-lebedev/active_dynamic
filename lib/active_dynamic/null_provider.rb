@@ -1,4 +1,4 @@
-module DynamicAttributes
+module ActiveDynamic
   class NullProvider
 
     def initialize(model_class)

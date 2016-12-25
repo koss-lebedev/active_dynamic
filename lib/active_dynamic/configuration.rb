@@ -1,4 +1,4 @@
-module DynamicAttributes
+module ActiveDynamic
 
   @@configuration = nil
 

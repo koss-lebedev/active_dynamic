@@ -1,5 +1,5 @@
-module DynamicAttributes
-  class CustomAttribute < ActiveRecord::Base
+module ActiveDynamic
+  class Attribute < ActiveRecord::Base
     belongs_to :customizable, polymorphic: true
 
     validates :name, presence: true

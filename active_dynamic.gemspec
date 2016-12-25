@@ -1,17 +1,17 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'dynamic_attributes/version'
+require 'active_dynamic/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'dynamic_attributes'
-  spec.version       = DynamicAttributes::VERSION
+  spec.name          = 'active_dynamic'
+  spec.version       = ActiveDynamic::VERSION
   spec.authors       = ['Constantine Lebedev']
   spec.email         = ['koss.lebedev@gmail.com']
 
   spec.summary       = 'Gem that allows to attach dynamic attributes to ActiveRecord model'
   spec.description   = 'Gem that allows to attach dynamic attributes to ActiveRecord model'
-  spec.homepage      = 'https://github.com/koss-lebedev/dynamic_attributes'
+  spec.homepage      = 'https://github.com/koss-lebedev/active_dynamic'
   spec.license       = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
