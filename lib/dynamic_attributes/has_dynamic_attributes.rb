@@ -1,18 +1,16 @@
-require 'active_record'
-
 module DynamicAttributes
   module HasDynamicAttributes
     extend ActiveSupport::Concern
 
     included do
-      has_many :custom_attributes, autosave: true, as: :customizable
+      has_many :custom_attributes, class_name: DynamicAttributes::CustomAttribute, autosave: true, as: :customizable
 
       after_initialize :load_dynamic_attributes
       before_save :save_dynamic_attributes
     end
 
     def dynamic_attributes
-      persisted? ? custom_fields.order(:created_at) : DynamicAttributes.configuration.provider_class.new(self.class).call
+      persisted? ? custom_fields.order(:created_at) : DynamicAttributes.configuration.provider_class.new(self).call
     end
 
     def dynamic_attr_names
@@ -40,7 +38,7 @@ module DynamicAttributes
     end
 
     def load_dynamic_attributes
-      custom_attributes.each do |ticket_field|
+      dynamic_attributes.each do |ticket_field|
         _custom_fields[ticket_field.name] = ticket_field.value
       end
 

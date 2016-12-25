@@ -3,8 +3,6 @@ require 'dynamic_attributes'
 
 require 'minitest/autorun'
 
-
-
 ActiveRecord::Base.establish_connection adapter: 'sqlite3', database: ':memory:'
 
 ActiveRecord::Schema.define do
@@ -18,5 +16,19 @@ ActiveRecord::Schema.define do
 end
 
 class Profile < ActiveRecord::Base
+  validates :first_name, presence: true
+end
+
+class ProfileAttributeProvider
+
+  def initialize(model)
+
+  end
+
+  def call
+    [
+        Struct.new(:name, :datatype, :value).new('biography', DynamicAttributes::DataType::Text, 'My life in one line')
+    ]
+  end
 
 end
