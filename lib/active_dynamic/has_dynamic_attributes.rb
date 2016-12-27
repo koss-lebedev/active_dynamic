@@ -3,14 +3,18 @@ module ActiveDynamic
     extend ActiveSupport::Concern
 
     included do
-      has_many :custom_attributes, class_name: ActiveDynamic::Attribute, autosave: true, as: :customizable
+      has_many :active_dynamic_attributes, class_name: ActiveDynamic::Attribute, autosave: true, as: :customizable
 
       after_initialize :load_dynamic_attributes
       before_save :save_dynamic_attributes
     end
 
     def dynamic_attributes
-      persisted? ? custom_attributes.order(:created_at) : ActiveDynamic.configuration.provider_class.new(self).call
+      if persisted?
+        active_dynamic_attributes.order(:created_at)
+      else
+        ActiveDynamic.configuration.provider_class.new(self).call
+      end
     end
 
     def dynamic_attr_names
@@ -47,7 +51,7 @@ module ActiveDynamic
 
     def save_dynamic_attributes
       dynamic_attributes.each do |field|
-        attr = custom_attributes.find_or_initialize_by(name: field.name, datatype: field.datatype)
+        attr = active_dynamic_attributes.find_or_initialize_by(name: field.name, datatype: field.datatype)
         attr.update(value: _custom_fields[field.name]) if _custom_fields[field.name]
       end
     end
@@ -55,4 +59,4 @@ module ActiveDynamic
   end
 end
 
-ActiveRecord::Base.send(:include, ActiveDynamic::HasDynamicAttributes)
+# ActiveRecord::Base.send(:include, ActiveDynamic::HasDynamicAttributes)

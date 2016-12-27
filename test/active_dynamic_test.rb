@@ -27,6 +27,7 @@ class ActiveDynamicTest < Minitest::Test
     @profile.biography = 'Beet farmer / Paper Salesman'
     @profile.save
 
+    refute @profile.persisted?
     assert_equal 'Beet farmer / Paper Salesman', @profile.biography
   end
 
