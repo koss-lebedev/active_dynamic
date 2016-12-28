@@ -51,12 +51,10 @@ module ActiveDynamic
 
     def save_dynamic_attributes
       dynamic_attributes.each do |field|
-        attr = active_dynamic_attributes.find_or_initialize_by(name: field.name, datatype: field.datatype)
+        attr = self.active_dynamic_attributes.find_or_initialize_by(name: field.name, datatype: field.datatype)
         attr.update(value: _custom_fields[field.name]) if _custom_fields[field.name]
       end
     end
 
   end
 end
-
-# ActiveRecord::Base.send(:include, ActiveDynamic::HasDynamicAttributes)
