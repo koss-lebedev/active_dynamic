@@ -6,7 +6,7 @@ module ActiveDynamic
       has_many :active_dynamic_attributes, class_name: ActiveDynamic::Attribute, autosave: true, as: :customizable
 
       after_initialize :load_dynamic_attributes
-      after_save :save_dynamic_attributes
+      before_save :save_dynamic_attributes
     end
 
     def dynamic_attributes
@@ -52,7 +52,13 @@ module ActiveDynamic
     def save_dynamic_attributes
       dynamic_attributes.each do |field|
         attr = self.active_dynamic_attributes.find_or_initialize_by(name: field.name, datatype: field.datatype)
-        attr.update(value: _custom_fields[field.name]) if _custom_fields[field.name]
+        if _custom_fields[field.name]
+          if self.persisted?
+            attr.update(value: _custom_fields[field.name])
+          else
+            attr.assign_attributes(value: _custom_fields[field.name])
+          end
+        end
       end
     end
 
