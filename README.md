@@ -1,8 +1,8 @@
 # ActiveDynamic
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/active_dynamic`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+ActiveDynamic allows to dynamically add properties to your ActiveRecord models and 
+work with them as regular properties.
+To see this in practice, check out the demo application available at [https://github.com/koss-lebedev/active_dynamic_demo](https://github.com/koss-lebedev/active_dynamic_demo)
 
 ## Installation
 
