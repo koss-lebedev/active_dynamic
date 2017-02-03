@@ -15,7 +15,7 @@ ActiveRecord::Schema.define do
     t.string :last_name
   end
 
-  ActiveDynamic::Migration.migrate :up
+  CreateActiveDynamicAttributesTable.migrate :up
 
 end
 

@@ -9,6 +9,11 @@ module ActiveDynamic
       before_save :save_dynamic_attributes
     end
 
+    # def initialize(*args)
+    #   super
+    #   load_dynamic_attributes
+    # end
+
     def dynamic_attributes
       if persisted?
         active_dynamic_attributes.order(:created_at)
