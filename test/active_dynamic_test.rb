@@ -40,4 +40,12 @@ class ActiveDynamicTest < Minitest::Test
     refute_empty @profile.biography
   end
 
+  def test_persists_if_initialized_with_attrs
+    profile = Profile.new(first_name: 'Michael', biography: 'Basketball machine')
+    profile.save
+
+    assert profile.persisted?
+    refute_empty profile.biography
+  end
+
 end

@@ -5,14 +5,8 @@ module ActiveDynamic
     included do
       has_many :active_dynamic_attributes, class_name: ActiveDynamic::Attribute, autosave: true, as: :customizable
 
-      after_initialize :load_dynamic_attributes
       before_save :save_dynamic_attributes
     end
-
-    # def initialize(*args)
-    #   super
-    #   load_dynamic_attributes
-    # end
 
     def dynamic_attributes
       if persisted?
@@ -27,6 +21,13 @@ module ActiveDynamic
     end
 
   private
+
+    # use internal ActiveModel callback to generate accessors for dynamic attributes
+    # before attributes get assigned
+    def initialize_internals_callback
+      load_dynamic_attributes
+      super
+    end
 
     def generate_accessors(fields)
       fields.map(&:name).each do |field|
