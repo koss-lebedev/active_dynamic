@@ -6,6 +6,7 @@ module ActiveDynamic
       has_many :active_dynamic_attributes, class_name: ActiveDynamic::Attribute, autosave: true, as: :customizable
 
       before_save :save_dynamic_attributes
+      after_find :load_dynamic_attributes
     end
 
     def dynamic_attributes
@@ -16,15 +17,12 @@ module ActiveDynamic
       end
     end
 
-    def dynamic_attr_names
-      dynamic_attributes.map(&:name)
-    end
-
   private
 
     # use internal ActiveModel callback to generate accessors for dynamic attributes
     # before attributes get assigned
     def initialize_internals_callback
+      puts '!' * 100
       load_dynamic_attributes
       super
     end

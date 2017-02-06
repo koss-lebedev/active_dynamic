@@ -48,4 +48,13 @@ class ActiveDynamicTest < Minitest::Test
     refute_empty profile.biography
   end
 
+  def test_loads_dynamic_attributes_on_find
+    @profile.first_name = 'Dwight'
+    @profile.biography = 'Beet farmer / Paper Salesman'
+    @profile.save
+
+    loaded_profile = Profile.find(@profile.id)
+    assert_equal 'Beet farmer / Paper Salesman', loaded_profile.biography
+  end
+
 end
