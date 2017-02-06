@@ -22,7 +22,6 @@ module ActiveDynamic
     # use internal ActiveModel callback to generate accessors for dynamic attributes
     # before attributes get assigned
     def initialize_internals_callback
-      puts '!' * 100
       load_dynamic_attributes
       super
     end
