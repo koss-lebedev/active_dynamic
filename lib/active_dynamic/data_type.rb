@@ -6,7 +6,5 @@ module ActiveDynamic
     Decimal = 3
     Date = 4
     DateTime = 5
-
-    All = [String, Text, Integer, Decimal]
   end
 end
