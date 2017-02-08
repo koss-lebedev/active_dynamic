@@ -57,8 +57,8 @@ class ProfileAttributeProvider
   def call
     [
       # attribute definition has to specify attribute name, datatype, and optionally default value
-      ActiveDynamic::AttributeDefinition.new('age', ActiveDynamic::DataType::Integer, 18),
-      ActiveDynamic::AttributeDefinition.new('biography', ActiveDynamic::DataType::Text)
+      ActiveDynamic::AttributeDefinition.new('age', datatype: ActiveDynamic::DataType::Integer, default_value: 18),
+      ActiveDynamic::AttributeDefinition.new('biography', datatype: ActiveDynamic::DataType::Text)
     ]
   end
   
