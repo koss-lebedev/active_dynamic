@@ -56,9 +56,12 @@ class ProfileAttributeProvider
   # You can get it from the configuration file, DB, etc., depending on your app logic
   def call
     [
-      # attribute definition has to specify attribute name, datatype, and optionally default value
-      ActiveDynamic::AttributeDefinition.new('age', datatype: ActiveDynamic::DataType::Integer, default_value: 18),
-      ActiveDynamic::AttributeDefinition.new('biography', datatype: ActiveDynamic::DataType::Text)
+      # attribute definition has to specify attribute display name
+      ActiveDynamic::AttributeDefinition.new('biography'),
+      
+      # Optionally you can provide datatype, system name, and default value.
+      # If system name is not specified, it will be generated automatically from display name
+      ActiveDynamic::AttributeDefinition.new('age', datatype: ActiveDynamic::DataType::Integer, default_value: 18)
     ]
   end
   
