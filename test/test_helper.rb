@@ -27,13 +27,15 @@ end
 
 class ProfileAttributeProvider
 
-  def initialize(model)
+  def initialize(model_class)
 
   end
 
   def call
     [
-        ActiveDynamic::AttributeDefinition.new('biography', ActiveDynamic::DataType::Text)
+        ActiveDynamic::AttributeDefinition.new('life story',
+                                               system_name: 'biography',
+                                               datatype: ActiveDynamic::DataType::Text)
     ]
   end
 

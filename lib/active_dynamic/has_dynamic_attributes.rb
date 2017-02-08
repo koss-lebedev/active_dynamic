@@ -13,7 +13,7 @@ module ActiveDynamic
       if persisted?
         active_dynamic_attributes.order(:created_at)
       else
-        ActiveDynamic.configuration.provider_class.new(self).call
+        ActiveDynamic.configuration.provider_class.new(self.class).call
       end
     end
 
@@ -54,7 +54,9 @@ module ActiveDynamic
 
     def save_dynamic_attributes
       dynamic_attributes.each do |field|
-        attr = self.active_dynamic_attributes.find_or_initialize_by(name: field.name, datatype: field.datatype)
+        props = { name: field.name, display_name: field.display_name,
+                  datatype: field.datatype, value: field.value }
+        attr = self.active_dynamic_attributes.find_or_initialize_by(props)
         if _custom_fields[field.name]
           if self.persisted?
             attr.update(value: _custom_fields[field.name])

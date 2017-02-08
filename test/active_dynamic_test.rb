@@ -23,6 +23,10 @@ class ActiveDynamicTest < Minitest::Test
     assert_respond_to @profile, :biography
   end
 
+  def test_sets_display_name
+    assert_equal @profile.dynamic_attributes.map(&:display_name).first, 'life story'.freeze
+  end
+
   def test_doesnt_reset_field_on_failed_save
     @profile.biography = 'Beet farmer / Paper Salesman'
     @profile.save
