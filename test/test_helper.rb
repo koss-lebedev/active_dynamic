@@ -20,7 +20,7 @@ ActiveRecord::Schema.define do
 end
 
 class Profile < ActiveRecord::Base
-  include ActiveDynamic::HasDynamicAttributes
+  has_dynamic_attributes
 
   validates :first_name, presence: true
 end

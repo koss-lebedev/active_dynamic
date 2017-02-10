@@ -30,7 +30,7 @@ attributses. For example, if you have `Profile` model:
  
 ```ruby
 class Profile < ActiveRecord::Base
-  include ActiveDynamic::HasDynamicAttributes
+  has_dynamic_attributes
   
   # ...
 end  
