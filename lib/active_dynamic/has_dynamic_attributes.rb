@@ -27,14 +27,16 @@ module ActiveDynamic
     end
 
     def generate_accessors(fields)
-      fields.map(&:name).each do |field|
+      fields.each do |field|
 
-        define_singleton_method(field) do
-          _custom_fields[field]
+        self.class.validates_presence_of(field.name) if field.required?
+
+        define_singleton_method(field.name) do
+          _custom_fields[field.name]
         end
 
-        define_singleton_method("#{field}=") do |value|
-          _custom_fields[field] = value.strip
+        define_singleton_method("#{field.name}=") do |value|
+          _custom_fields[field.name] = value.strip if value
         end
 
       end

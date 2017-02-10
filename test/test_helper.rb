@@ -35,6 +35,7 @@ class ProfileAttributeProvider
     [
         ActiveDynamic::AttributeDefinition.new('life story',
                                                system_name: 'biography',
+                                               required: true,
                                                datatype: ActiveDynamic::DataType::Text)
     ]
   end

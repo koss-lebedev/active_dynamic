@@ -8,6 +8,11 @@ module ActiveDynamic
       @name = options[:system_name] || display_name.gsub(/[^a-zA-Z\s]/, ''.freeze).gsub(/\s+/, '_'.freeze)
       @datatype = options[:datatype]
       @value = options[:default_value]
+      @required = options[:required]
+    end
+
+    def required?
+      !!@required
     end
 
   end

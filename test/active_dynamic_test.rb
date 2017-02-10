@@ -61,4 +61,11 @@ class ActiveDynamicTest < Minitest::Test
     assert_equal 'Beet farmer / Paper Salesman', loaded_profile.biography
   end
 
+  def test_validates_required_attribute
+    @profile.biography = nil
+    @profile.save
+
+    assert !@profile.persisted?
+  end
+
 end
