@@ -5,7 +5,8 @@
 
 ActiveDynamic allows to dynamically add properties to your ActiveRecord models and 
 work with them as regular properties.
-To see this in practice, check out the demo application available at [https://github.com/koss-lebedev/active_dynamic_demo](https://github.com/koss-lebedev/active_dynamic_demo)
+To see this in practice, check out the demo application available at [https://github.com/koss-lebedev/active_dynamic_demo](https://github.com/koss-lebedev/active_dynamic_demo).
+I also wrote [an article](https://medium.com/@koss_lebedev/how-to-dynamically-add-attributes-to-your-activerecord-models-e233b17ad695#.k66n002of) explaining how to use active_dynamic.
 
 ## Installation
 
@@ -25,8 +26,8 @@ Or install it yourself as:
 
 ## Usage
 
-To make this gem work, first you need to include `HasDynamicAttributes` concern to the model that needs to have dynamic 
-attributses. For example, if you have `Profile` model:
+To make this gem work, first you need to add `has_dynamic_attributes` to the model that needs to have dynamic 
+attributes. For example, if you have `Profile` model:
  
 ```ruby
 class Profile < ActiveRecord::Base
