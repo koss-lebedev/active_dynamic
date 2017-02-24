@@ -29,7 +29,7 @@ module ActiveDynamic
     def generate_accessors(fields)
       fields.each do |field|
 
-        self.class.validates_presence_of(field.name) if field.required?
+        add_presence_validator(field.name) if field.required?
 
         define_singleton_method(field.name) do
           _custom_fields[field.name]
@@ -39,6 +39,12 @@ module ActiveDynamic
           _custom_fields[field.name] = value.strip if value
         end
 
+      end
+    end
+
+    def add_presence_validator(attribute)
+      self.singleton_class.instance_eval do
+        validates_presence_of(attribute)
       end
     end
 
