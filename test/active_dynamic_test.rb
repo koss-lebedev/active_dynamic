@@ -19,7 +19,12 @@ class ActiveDynamicTest < Minitest::Test
     assert_kind_of Array, @profile.dynamic_attributes
   end
 
+  def test_has_dynamic_attributes_loaded_method
+    assert_respond_to @profile, :dynamic_attributes_loaded?
+  end
+
   def test_sets_attribute_provider
+    puts @profile.biography
     assert_respond_to @profile, :biography
   end
 
