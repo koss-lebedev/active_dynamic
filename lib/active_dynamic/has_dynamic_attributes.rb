@@ -20,10 +20,14 @@ module ActiveDynamic
     end
 
     def respond_to?(method_name, include_private = false)
-      unless dynamic_attributes_loaded?
-        load_dynamic_attributes
+      if super
+        true
+      else
+        unless dynamic_attributes_loaded?
+          load_dynamic_attributes
+        end
+        dynamic_attributes.find { |attr| attr.name == method_name.to_s.gsub(/=/, '') }.present?
       end
-      dynamic_attributes.find { |attr| attr.name == method_name.to_s.gsub(/=/, '') }.present? || super
     end
 
     def method_missing(method_name, *arguments, &block)
