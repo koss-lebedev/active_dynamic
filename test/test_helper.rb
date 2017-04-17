@@ -41,6 +41,3 @@ class ProfileAttributeProvider
   end
 
 end
-
-
-# $stdout = File.new('../test.log', 'a')

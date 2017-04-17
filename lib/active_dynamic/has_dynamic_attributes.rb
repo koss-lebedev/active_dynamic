@@ -15,18 +15,18 @@ module ActiveDynamic
       end
     end
 
-    def dynamic_attributes_loaded? 
+    def dynamic_attributes_loaded?
       @dynamic_attributes_loaded ||= false
     end
 
     def respond_to?(method_name, include_private = false)
-      unless dynamic_attributes_loaded?(self) # I have no idea why it needs an argument here...
+      unless dynamic_attributes_loaded?
         load_dynamic_attributes
       end
-      dynamic_attributes.find { |attr| attr.name == method_name.to_s.gsub(/=/, '') }.present?
+      dynamic_attributes.find { |attr| attr.name == method_name.to_s.gsub(/=/, '') }.present? || super
     end
 
-    def method_missing(method_name, *arguments, &block) 
+    def method_missing(method_name, *arguments, &block)
       if dynamic_attributes_loaded?
         super
       else
