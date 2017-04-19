@@ -2,6 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/active_dynamic.svg)](https://badge.fury.io/rb/active_dynamic)
 [![Code Climate](https://codeclimate.com/github/koss-lebedev/active_dynamic/badges/gpa.svg)](https://codeclimate.com/github/koss-lebedev/active_dynamic)
+[![Build Status](https://travis-ci.org/koss-lebedev/active_dynamic.svg?branch=master)](https://travis-ci.org/koss-lebedev/active_dynam
 
 ActiveDynamic allows to dynamically add properties to your ActiveRecord models and 
 work with them as regular properties.
