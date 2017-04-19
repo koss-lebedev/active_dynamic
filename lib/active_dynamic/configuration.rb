@@ -4,11 +4,7 @@ module ActiveDynamic
 
   def self.configure
     @@configuration = Configuration.new
-
-    if block_given?
-      yield configuration
-    end
-
+    yield configuration if block_given?
     configuration
   end
 
@@ -22,9 +18,7 @@ module ActiveDynamic
       @provider_class || NullProvider
     end
 
-    def provider_class=(klass)
-      @provider_class = klass
-    end
+    attr_writer :provider_class
 
   end
 end

@@ -3,7 +3,10 @@ module ActiveDynamic
     extend ActiveSupport::Concern
 
     included do
-      has_many :active_dynamic_attributes, class_name: ActiveDynamic::Attribute, autosave: true, as: :customizable
+      has_many :active_dynamic_attributes,
+               class_name: ActiveDynamic::Attribute,
+               autosave: true,
+               as: :customizable
       before_save :save_dynamic_attributes
     end
 
@@ -23,9 +26,7 @@ module ActiveDynamic
       if super
         true
       else
-        unless dynamic_attributes_loaded?
-          load_dynamic_attributes
-        end
+        load_dynamic_attributes unless dynamic_attributes_loaded?
         dynamic_attributes.find { |attr| attr.name == method_name.to_s.gsub(/=/, '') }.present?
       end
     end
@@ -58,7 +59,7 @@ module ActiveDynamic
     end
 
     def add_presence_validator(attribute)
-      self.singleton_class.instance_eval do
+      singleton_class.instance_eval do
         validates_presence_of(attribute)
       end
     end
@@ -80,9 +81,9 @@ module ActiveDynamic
       dynamic_attributes.each do |field|
         props = { name: field.name, display_name: field.display_name,
                   datatype: field.datatype, value: field.value }
-        attr = self.active_dynamic_attributes.find_or_initialize_by(props)
+        attr = active_dynamic_attributes.find_or_initialize_by(props)
         if _custom_fields[field.name]
-          if self.persisted?
+          if persisted?
             attr.update(value: _custom_fields[field.name])
           else
             attr.assign_attributes(value: _custom_fields[field.name])
