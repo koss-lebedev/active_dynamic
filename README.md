@@ -73,7 +73,7 @@ end
 
 To resolve dynamic attribute definitions for more than one model:
 
-```
+```ruby
 class Profile < ActiveRecord::Base
   has_dynamic_attributes
   
