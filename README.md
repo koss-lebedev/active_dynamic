@@ -49,9 +49,9 @@ end
 
 class ProfileAttributeProvider
 
-  # Constructor will receive instance of a model to which dynamic attributes are added
-  def initialize(model)
-    @model = model    
+  # Constructor will receive a class to which dynamic attributes are added
+  def initialize(model_class)
+    @model_class = model_class    
   end
   
   # This method has to return array of dynamic field definitions.
@@ -69,6 +69,44 @@ class ProfileAttributeProvider
   
 end
 
+```
+
+To resolve dynamic attribute definitions for more than one model:
+
+```
+class Profile < ActiveRecord::Base
+  has_dynamic_attributes
+  
+  # ...
+end  
+ 
+class Document < ActiveRecord::Base
+  has_dynamic_attributes
+  
+  # ...
+end  
+ 
+class ProfileAttributeProvider
+ 
+  def initialize(model_class)
+    @model_class = model_class    
+  end
+  
+  def call
+    if @model_class == Profile
+      [
+        # attribute definitions for Profile model
+      ] 
+    elsif @model_class == Document
+      [
+        # attribute definitions for Document model
+      ] 
+    else
+      []
+    end
+  end
+  
+end
 ```
 
 
