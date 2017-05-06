@@ -27,7 +27,7 @@ end
 
 class ProfileAttributeProvider
 
-  def initialize(model_class); end
+  def initialize(model); end
 
   def call
     [

@@ -11,6 +11,13 @@ class ActiveDynamicTest < Minitest::Test
     @profile = Profile.new
   end
 
+  def test_initializes_with_dynamic_attribute
+    profile = Profile.new(first_name: 'Dwight', biography: 'Beet farmer / Paper Salesman')
+    profile.save!
+
+    assert profile.persisted?
+  end
+
   def test_presence_of_version_number
     refute_nil ::ActiveDynamic::VERSION
   end

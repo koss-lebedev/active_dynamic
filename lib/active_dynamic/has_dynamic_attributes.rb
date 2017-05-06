@@ -14,7 +14,7 @@ module ActiveDynamic
       if persisted?
         active_dynamic_attributes.order(:created_at)
       else
-        ActiveDynamic.configuration.provider_class.new(self.class).call
+        ActiveDynamic.configuration.provider_class.new(self).call
       end
     end
 
