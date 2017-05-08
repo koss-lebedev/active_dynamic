@@ -6,6 +6,7 @@ module ActiveDynamic
       has_many :active_dynamic_attributes,
                class_name: ActiveDynamic::Attribute,
                autosave: true,
+               dependent: :destroy,
                as: :customizable
       before_save :save_dynamic_attributes
     end
