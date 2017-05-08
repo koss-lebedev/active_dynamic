@@ -12,9 +12,9 @@ module ActiveDynamic
 
     def dynamic_attributes
       if persisted?
-        active_dynamic_attributes.order(:created_at)
+        ActiveDynamic.configuration.resolve_persisted_proc.call(self) ? resolve_combined : resolve_from_db
       else
-        ActiveDynamic.configuration.provider_class.new(self).call
+        resolve_from_provider
       end
     end
 
@@ -41,6 +41,22 @@ module ActiveDynamic
     end
 
   private
+
+    def resolve_combined
+      attributes = resolve_from_db
+      resolve_from_provider.each do |attribute|
+        attributes << attribute unless attributes.find { |attr| attr.name == attribute.name }
+      end
+      attributes
+    end
+
+    def resolve_from_db
+      active_dynamic_attributes.order(:created_at)
+    end
+
+    def resolve_from_provider
+      ActiveDynamic.configuration.provider_class.new(self).call
+    end
 
     def generate_accessors(fields)
       fields.each do |field|

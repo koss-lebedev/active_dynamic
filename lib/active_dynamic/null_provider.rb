@@ -1,7 +1,7 @@
 module ActiveDynamic
   class NullProvider
 
-    def initialize(model_class)
+    def initialize(model)
     end
 
     def call
