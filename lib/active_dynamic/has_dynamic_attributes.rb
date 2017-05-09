@@ -18,7 +18,7 @@ module ActiveDynamic
         resolve_from_provider
       end
     end
-    
+
     def has_any?
       self.active_dynamic_attributes.any?
     end
@@ -66,7 +66,7 @@ module ActiveDynamic
     def generate_accessors(fields)
       fields.each do |field|
 
-        #add_presence_validator(field.name) if field.required?
+        add_presence_validator(field.name) if field.required?
 
         define_singleton_method(field.name) do
           _custom_fields[field.name]
