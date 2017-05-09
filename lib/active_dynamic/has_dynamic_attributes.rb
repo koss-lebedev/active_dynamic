@@ -12,15 +12,11 @@ module ActiveDynamic
     end
 
     def dynamic_attributes
-      if persisted? && has_any?
+      if persisted? && has_dynamic_attributes?
         ActiveDynamic.configuration.resolve_persisted ? resolve_combined : resolve_from_db
       else
         resolve_from_provider
       end
-    end
-
-    def has_any?
-      self.active_dynamic_attributes.any?
     end
 
     def dynamic_attributes_loaded?
@@ -47,6 +43,10 @@ module ActiveDynamic
 
   private
 
+    def has_dynamic_attributes?
+      active_dynamic_attributes.any?
+    end
+
     def resolve_combined
       attributes = resolve_from_db
       resolve_from_provider.each do |attribute|
@@ -56,7 +56,7 @@ module ActiveDynamic
     end
 
     def resolve_from_db
-      self.active_dynamic_attributes
+      active_dynamic_attributes
     end
 
     def resolve_from_provider
