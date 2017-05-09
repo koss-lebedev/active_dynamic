@@ -21,7 +21,6 @@ end
 
 class Profile < ActiveRecord::Base
   has_dynamic_attributes
-
   validates :first_name, presence: true
 end
 
@@ -31,13 +30,8 @@ class ProfileAttributeProvider
 
   def call
     [
-        ActiveDynamic::AttributeDefinition.new('life story',
-                                               system_name: 'biography',
-                                               required: true,
-                                               datatype: ActiveDynamic::DataType::Text),
-        ActiveDynamic::AttributeDefinition.new('age',
-                                               system_name: 'age',
-                                               datatype: ActiveDynamic::DataType::Integer)
+      ActiveDynamic::AttributeDefinition.new('Life Story', ActiveDynamic::DataType::Text, 'default value for story', true),
+      ActiveDynamic::AttributeDefinition.new('Age', ActiveDynamic::DataType::Integer, 'value for age', false),
     ]
   end
 

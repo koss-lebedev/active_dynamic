@@ -6,14 +6,14 @@ class ActiveDynamicTest < Minitest::Test
   def setup
     ActiveDynamic.configure do |config|
       config.provider_class = ProfileAttributeProvider
-      config.resolve_persisted_proc = Proc.new { |model| false }
+      config.resolve_persisted = false
     end
 
     @profile = Profile.new
   end
 
   def test_initializes_with_dynamic_attribute
-    profile = Profile.new(first_name: 'Dwight', biography: 'Beet farmer / Paper Salesman')
+    profile = Profile.new(first_name: 'Dwight', life_story: 'Beet farmer / Paper Salesman')
     profile.save!
 
     assert profile.persisted?
@@ -32,50 +32,50 @@ class ActiveDynamicTest < Minitest::Test
   end
 
   def test_sets_attribute_provider
-    puts @profile.biography
-    assert_respond_to @profile, :biography
+    puts @profile.life_story
+    assert_respond_to @profile, :life_story
   end
 
   def test_sets_display_name
-    assert_equal @profile.dynamic_attributes.map(&:display_name).first, 'life story'.freeze
+    assert_equal @profile.dynamic_attributes.map(&:display_name).first, 'Life Story'.freeze
   end
 
   def test_doesnt_reset_field_on_failed_save
-    @profile.biography = 'Beet farmer / Paper Salesman'
+    @profile.life_story = 'Beet farmer / Paper Salesman'
     @profile.save
 
     refute @profile.persisted?
-    assert_equal 'Beet farmer / Paper Salesman', @profile.biography
+    assert_equal 'Beet farmer / Paper Salesman', @profile.life_story
   end
 
   def test_persists_dynamic_attribute
     @profile.first_name = 'Dwight'
-    @profile.biography = 'Beet farmer / Paper Salesman'
+    @profile.life_story = 'Beet farmer / Paper Salesman'
     @profile.save
 
     assert @profile.persisted?
-    refute_empty @profile.biography
+    refute_empty @profile.life_story
   end
 
   def test_persists_if_initialized_with_attrs
-    profile = Profile.new(first_name: 'Michael', biography: 'Basketball machine')
+    profile = Profile.new(first_name: 'Michael', life_story: 'Basketball machine')
     profile.save
 
     assert profile.persisted?
-    refute_empty profile.biography
+    refute_empty profile.life_story
   end
 
   def test_loads_dynamic_attributes_on_find
     @profile.first_name = 'Dwight'
-    @profile.biography = 'Beet farmer / Paper Salesman'
+    @profile.life_story = 'Beet farmer / Paper Salesman'
     @profile.save
 
     loaded_profile = Profile.find(@profile.id)
-    assert_equal 'Beet farmer / Paper Salesman', loaded_profile.biography
+    assert_equal 'Beet farmer / Paper Salesman', loaded_profile.life_story
   end
 
   def test_validates_required_attribute
-    @profile.biography = nil
+    @profile.life_story = nil
     @profile.save
 
     assert !@profile.persisted?

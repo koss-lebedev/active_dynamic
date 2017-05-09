@@ -18,11 +18,11 @@ module ActiveDynamic
       @provider_class || NullProvider
     end
 
-    def resolve_persisted_proc
-      @resolve_persisted_proc || Proc.new { |model| false }
+    def resolve_persisted
+      @resolve_persisted || false
     end
 
-    attr_writer :provider_class, :resolve_persisted_proc
+    attr_writer :provider_class, :resolve_persisted
 
   end
 end
