@@ -81,4 +81,26 @@ class ActiveDynamicTest < Minitest::Test
     assert !@profile.persisted?
   end
 
+  def test_handles_resolve_persisted_with_bool_value
+    ActiveDynamic.configure do |config|
+      config.provider_class = ProfileAttributeProvider
+      config.resolve_persisted = true
+    end
+
+    profile = Profile.new
+
+    assert profile.send(:should_resolve_persisted?)
+  end
+
+  def test_handles_resolve_persisted_with_proc_value
+    ActiveDynamic.configure do |config|
+      config.provider_class = ProfileAttributeProvider
+      config.resolve_persisted = Proc.new { |model| true }
+    end
+
+    profile = Profile.new
+
+    assert profile.send(:should_resolve_persisted?)
+  end
+
 end
