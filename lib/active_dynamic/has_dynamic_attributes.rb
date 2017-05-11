@@ -12,8 +12,8 @@ module ActiveDynamic
     end
 
     def dynamic_attributes
-      if persisted?
-        ActiveDynamic.configuration.resolve_persisted_proc.call(self) ? resolve_combined : resolve_from_db
+      if persisted? && has_dynamic_attributes?
+        ActiveDynamic.configuration.resolve_persisted ? resolve_combined : resolve_from_db
       else
         resolve_from_provider
       end
@@ -43,16 +43,20 @@ module ActiveDynamic
 
   private
 
+    def has_dynamic_attributes?
+      active_dynamic_attributes.any?
+    end
+
     def resolve_combined
       attributes = resolve_from_db
       resolve_from_provider.each do |attribute|
-        attributes << attribute unless attributes.find { |attr| attr.name == attribute.name }
+        attributes << ActiveDynamic::Attribute.new(attribute.as_json) unless attributes.find { |attr| attr.name == attribute.name }
       end
       attributes
     end
 
     def resolve_from_db
-      active_dynamic_attributes.order(:created_at)
+      active_dynamic_attributes
     end
 
     def resolve_from_provider
@@ -96,9 +100,7 @@ module ActiveDynamic
 
     def save_dynamic_attributes
       dynamic_attributes.each do |field|
-        props = { name: field.name, display_name: field.display_name,
-                  datatype: field.datatype, value: field.value }
-        attr = active_dynamic_attributes.find_or_initialize_by(props)
+        attr = active_dynamic_attributes.find_or_initialize_by(field.as_json)
         if _custom_fields[field.name]
           if persisted?
             attr.update(value: _custom_fields[field.name])
