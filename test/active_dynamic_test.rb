@@ -36,6 +36,11 @@ class ActiveDynamicTest < Minitest::Test
     assert_respond_to @profile, :life_story
   end
 
+  def test_sets_name
+    assert_equal @profile.dynamic_attributes.map(&:name).first, 'life_story'.freeze
+    assert_equal @profile.dynamic_attributes.map(&:name).last, 'home_town'.freeze
+  end
+
   def test_sets_display_name
     assert_equal @profile.dynamic_attributes.map(&:display_name).first, 'Life Story'.freeze
   end
