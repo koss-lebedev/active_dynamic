@@ -12,7 +12,7 @@ module ActiveDynamic
     end
 
     def dynamic_attributes
-      if persisted? && has_dynamic_attributes?
+      if persisted? && any_dynamic_attributes?
         should_resolve_persisted? ? resolve_combined : resolve_from_db
       else
         resolve_from_provider
@@ -28,7 +28,7 @@ module ActiveDynamic
         true
       else
         load_dynamic_attributes unless dynamic_attributes_loaded?
-        dynamic_attributes.find { |attr| attr.name == method_name.to_s.gsub(/=/, '') }.present?
+        dynamic_attributes.find { |attr| attr.name == method_name.to_s.delete('=') }.present?
       end
     end
 
@@ -41,21 +41,21 @@ module ActiveDynamic
       end
     end
 
-  private
+    private
 
     def should_resolve_persisted?
       value = ActiveDynamic.configuration.resolve_persisted
       case value
-        when TrueClass, FalseClass
-          value
-        when Proc
-          value.call(self)
-        else
-          raise "Invalid configuration for resolve_persisted. Value should be Bool or Proc, got #{value.class}"
+      when TrueClass, FalseClass
+        value
+      when Proc
+        value.call(self)
+      else
+        raise "Invalid configuration for resolve_persisted. Value should be Bool or Proc, got #{value.class}"
       end
     end
 
-    def has_dynamic_attributes?
+    def any_dynamic_attributes?
       active_dynamic_attributes.any?
     end
 
@@ -112,13 +112,12 @@ module ActiveDynamic
 
     def save_dynamic_attributes
       dynamic_attributes.each do |field|
+        next unless _custom_fields[field.name]
         attr = active_dynamic_attributes.find_or_initialize_by(field.as_json)
-        if _custom_fields[field.name]
-          if persisted?
-            attr.update(value: _custom_fields[field.name])
-          else
-            attr.assign_attributes(value: _custom_fields[field.name])
-          end
+        if persisted?
+          attr.update(value: _custom_fields[field.name])
+        else
+          attr.assign_attributes(value: _custom_fields[field.name])
         end
       end
     end
