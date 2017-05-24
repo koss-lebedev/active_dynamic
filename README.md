@@ -109,6 +109,32 @@ class ProfileAttributeProvider
 end
 ```
 
+## How ActiveDynamic resolves dynamic attributes
+
+When you work with unsaved models, ActiveDynamic will use `provider_class` to resolve a list 
+of dynamic attributes, and it will store them alongside the model when the model is saved. 
+So next time when you load that model from DB, ActiveDynamic won't look into `provider_class` 
+and it will load only the dynamic attributes that were created when the model was saved for 
+the first time.
+
+If you want dynamic attributes to be resolved from `provider_class` for persisted models as well,
+you can use `resolve_persisted` configuration option:
+
+```ruby
+# lib/initializers/dynamic_attribute.rb
+
+ActiveDynamic.configure do |config|
+  # ... 
+  
+  # you can set it to Bool value to apply 
+  # the behavior to all models
+  config.resolve_persisted = true
+  
+  # or you can set it to a Proc to configure the behavior
+  # on per-class basis
+  config.resolve_persisted = Proc.new { |model| model.is_a?(Profile) ? true  : false }
+end
+```
 
 ## Contributing
 
