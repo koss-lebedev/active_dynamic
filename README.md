@@ -126,12 +126,10 @@ you can use `resolve_persisted` configuration option:
 ActiveDynamic.configure do |config|
   # ... 
   
-  # you can set it to Bool value to apply 
-  # the behavior to all models
+  # you can set it to Bool value to apply the behavior to all models
   config.resolve_persisted = true
   
-  # or you can set it to a Proc to configure the behavior
-  # on per-class basis
+  # or you can set it to a Proc to configure the behavior on per-class basis
   config.resolve_persisted = Proc.new { |model| model.is_a?(Profile) ? true  : false }
 end
 ```
