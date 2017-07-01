@@ -49,9 +49,9 @@ end
 
 class ProfileAttributeProvider
 
-  # Constructor will receive a class to which dynamic attributes are added
-  def initialize(model_class)
-    @model_class = model_class    
+  # Constructor will receive an instance to which dynamic attributes are added
+  def initialize(model)
+    @model = model
   end
   
   # This method has to return array of dynamic field definitions.
@@ -88,21 +88,22 @@ end
  
 class ProfileAttributeProvider
  
-  def initialize(model_class)
-    @model_class = model_class    
+  def initialize(model)
+    @model = model   
   end
   
   def call
-    if @model_class == Profile
-      [
-        # attribute definitions for Profile model
-      ] 
-    elsif @model_class == Document
-      [
-        # attribute definitions for Document model
-      ] 
-    else
-      []
+    case @model
+      when Profile
+        [
+          # attribute definitions for Profile model
+        ]
+      when Document
+        [
+          # attribute definitions for Document model
+        ]
+      else
+        []
     end
   end
   
