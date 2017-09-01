@@ -108,4 +108,11 @@ class ActiveDynamicTest < Minitest::Test
     assert profile.send(:should_resolve_persisted?)
   end
 
+  def test_supports_integer_values
+    profile = Profile.new
+    profile.age = 21
+
+    assert true
+  end
+
 end
