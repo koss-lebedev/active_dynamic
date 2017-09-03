@@ -111,8 +111,9 @@ class ActiveDynamicTest < Minitest::Test
   def test_supports_integer_values
     profile = Profile.new
     profile.age = 21
+    profile.first_name = 'Joe'
 
-    assert true
+    assert profile.save
   end
 
 end
