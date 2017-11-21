@@ -4,7 +4,7 @@ module ActiveDynamic
 
     included do
       has_many :active_dynamic_attributes,
-               class_name: ActiveDynamic::Attribute,
+               class_name: 'ActiveDynamic::Attribute',
                autosave: true,
                dependent: :destroy,
                as: :customizable
