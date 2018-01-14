@@ -70,6 +70,19 @@ class ActiveDynamicTest < Minitest::Test
     refute_empty profile.life_story
   end
 
+  def test_updates_values_when_resolving_persisted
+    ActiveDynamic.configure do |config|
+      config.provider_class = ProfileAttributeProvider
+      config.resolve_persisted = true
+    end
+
+    profile = Profile.new(first_name: 'Michael', life_story: 'Basketball machine')
+    profile.save
+    was_updated = profile.update_attributes(life_story: 'Regional manager')
+
+    assert was_updated  
+  end
+
   def test_loads_dynamic_attributes_on_find
     @profile.first_name = 'Dwight'
     @profile.life_story = 'Beet farmer / Paper Salesman'
