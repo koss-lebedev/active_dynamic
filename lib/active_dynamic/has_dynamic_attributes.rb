@@ -85,7 +85,7 @@ module ActiveDynamic
         end
 
         define_singleton_method("#{field.name}=") do |value|
-          _custom_fields[field.name] = value.to_s.strip if value
+          _custom_fields[field.name] = value && value.to_s.strip
         end
 
       end

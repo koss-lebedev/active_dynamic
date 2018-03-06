@@ -129,4 +129,15 @@ class ActiveDynamicTest < Minitest::Test
     assert profile.save
   end
 
+  def test_allows_nil_values
+    profile = Profile.new
+    profile.home_town = 'Scranton'
+    profile.first_name = 'Dwight'
+    profile.life_story = 'Beet farmer / Paper Salesman'
+    profile.save
+    profile.home_town = nil
+
+    assert profile.home_town.nil?
+  end
+
 end
