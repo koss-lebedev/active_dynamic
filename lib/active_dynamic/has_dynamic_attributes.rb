@@ -68,7 +68,7 @@ module ActiveDynamic
     end
 
     def resolve_from_db
-      active_dynamic_attributes
+      active_dynamic_attributes.reload
     end
 
     def resolve_from_provider
