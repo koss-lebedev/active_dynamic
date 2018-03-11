@@ -140,4 +140,14 @@ class ActiveDynamicTest < Minitest::Test
     assert profile.home_town.nil?
   end
 
+  def test_where_dynamic_accepts_hash
+    [18, 21].each do |age|
+      profile = Profile.new(first_name: 'Jon', age: age)
+      profile.save!
+    end
+
+    eighteen_year_old = Profile.where_dynamic(age: 18).first
+    assert eighteen_year_old
+  end
+
 end

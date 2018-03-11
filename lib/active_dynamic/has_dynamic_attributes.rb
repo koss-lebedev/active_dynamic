@@ -11,6 +11,21 @@ module ActiveDynamic
       before_save :save_dynamic_attributes
     end
 
+    class_methods do
+      def where_dynamic(options)
+        query = joins(:active_dynamic_attributes)
+        
+        options.each do |prop, value|
+          query = query.where(active_dynamic_attributes: {
+            name: prop,
+            value: value
+          })
+        end
+        
+        query
+      end
+    end
+
     def dynamic_attributes
       if persisted? && any_dynamic_attributes?
         should_resolve_persisted? ? resolve_combined : resolve_from_db
