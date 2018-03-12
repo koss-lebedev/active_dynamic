@@ -135,6 +135,18 @@ ActiveDynamic.configure do |config|
 end
 ```
 
+## Querying
+
+**This is still work in progress, so think twice before using it in production 🙂**
+
+ActiveDynamic provides `where_dynamic` class method, that you can use to search by dynamic fields. For example, if you have a `Profile` model with `age` attribute, you can use it like this:
+
+```ruby
+  Profile.where_dynamic(age: 21)
+```
+
+At the moment, only hash arguments are supported. 
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/koss-lebedev/active_dynamic. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
