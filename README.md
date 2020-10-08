@@ -24,6 +24,17 @@ And then execute:
 Or install it yourself as:
 
     $ gem install active_dynamic
+    
+## Run generator
+```ruby
+rails g active_dynamic
+```
+optional params
+skip-migration to skip generating a migration for the dynamic attributes table
+skip-initializer to skip generating an initializer file
+```ruby
+rails g active_dynamic skip-migration=true skip-initializer=true
+```
 
 ## Usage
 
